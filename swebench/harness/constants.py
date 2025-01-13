@@ -911,6 +911,23 @@ SPECS_PYDICOM.update(
 
 SPECS_HUMANEVAL = {k: {"python": "3.9", "test_cmd": "python"} for k in ["1.0"]}
 
+SPECS_SPRING_PETCLINIC = {
+    k: {
+        "base_image": "eclipse-temurin:17-jdk",  # Official Eclipse Temurin OpenJDK 17 image
+        "packages": "maven",  # Install Maven for building and running tests
+        "pre_install": [
+            "apt-get update",
+            "apt-get install -y maven",
+        ],
+        "install": "mvn install -DskipTests",  # Install dependencies without running tests
+        "test_cmd": "mvn test",  # Command to run tests
+        "environment": {
+            "JAVA_HOME": "/opt/java/openjdk",
+            "MAVEN_OPTS": "-Xmx1024m"  # Set Maven memory limits
+        }
+    }
+    for k in ["3.4.0"]  # Version based on Spring Boot parent version
+}
 # Constants - Task Instance Instllation Environment
 MAP_REPO_VERSION_TO_SPECS = {
     "astropy/astropy": SPECS_ASTROPY,
@@ -933,6 +950,7 @@ MAP_REPO_VERSION_TO_SPECS = {
     "sqlfluff/sqlfluff": SPECS_SQLFLUFF,
     "swe-bench/humaneval": SPECS_HUMANEVAL,
     "sympy/sympy": SPECS_SYMPY,
+    "spring-projects/spring-petclinic": SPECS_SPRING_PETCLINIC
 }
 
 # Constants - Repository Specific Installation Instructions
@@ -1516,4 +1534,5 @@ USE_X86 = {
     "sympy__sympy-14248",
     "sympy__sympy-15222",
     "sympy__sympy-19201",
+    "spring-projects__spring-petclinic-159",
 }

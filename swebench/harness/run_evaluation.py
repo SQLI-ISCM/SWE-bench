@@ -121,7 +121,7 @@ def run_instance(
         )
         if val.exit_code != 0:
             logger.info(f"Failed to apply patch to container, trying again...")
-            
+
             # try "patch --batch --fuzz=5 -p1 -i {patch_path}" to try again
             val = container.exec_run(
                 f"patch --batch --fuzz=5 -p1 -i {DOCKER_PATCH}",
@@ -300,6 +300,7 @@ def get_dataset_from_preds(
     """
     # load dataset
     dataset = load_swebench_dataset(dataset_name, split)
+    print(f"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>> {dataset_name} <<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<")
     dataset_ids = {i[KEY_INSTANCE_ID] for i in dataset}
 
     if instance_ids:
@@ -307,7 +308,7 @@ def get_dataset_from_preds(
         missing_preds = set(instance_ids) - set(predictions.keys())
         if missing_preds:
             print(f"Warning: Missing predictions for {len(missing_preds)} instance IDs.")
-    
+
     # check that all prediction IDs are in the dataset
     prediction_ids = set(predictions.keys())
     if prediction_ids - dataset_ids:
